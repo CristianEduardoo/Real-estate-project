@@ -1,0 +1,56 @@
+@include tablet{
+    .contenedor-anuncios{
+        @include grid(3, 2rem);
+    }
+}
+
+.anuncio{
+    background-color: lighten($gris, 5);
+    border: 0.5px solid darken($gris, 10); 
+    margin-bottom: 2rem;
+
+    @include tablet{
+        margin: 0;
+    }
+
+    &:last-of-type{ // asi el ultimo elemento no tiene margin
+        margin-bottom: 0rem;
+    }
+
+    h3{
+        font-weight: $regular;
+    }
+
+    h3, p{
+        margin: 0;
+    }
+}
+
+.contenido-anuncio{
+    padding: 2rem;
+    text-align: center;
+}
+
+.precio {
+    color: $verde;
+    padding: 1rem;
+    font-weight: $regular;
+    font-size: 3rem;
+}
+
+.iconos-caracteristicas{
+    display: flex;
+    justify-content: space-around;
+    padding: 0rem;
+    list-style: none;
+
+    li{
+        display: flex;
+        column-gap: 0.7rem;
+    }
+
+}
+
+.alturamin{
+    min-height: 15rem;
+}

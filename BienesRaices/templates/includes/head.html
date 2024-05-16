@@ -1,0 +1,16 @@
+{% load static %} {% comment %} Cargar los archivos estaticos {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienes Raíces</title>
+    <link rel="icon" href="#" type="image/x-icon">
+    <!--=============== Bibliotecas y frameworks ===============-->
+    <script src="https://kit.fontawesome.com/46cf9b25f7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="{% static 'css/app.css' %}?v=4" />
+    {% block head %}{% endblock head %}
+</head>
+{% block body %}{% endblock body %}

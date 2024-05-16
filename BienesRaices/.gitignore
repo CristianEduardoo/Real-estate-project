@@ -1,0 +1,25 @@
+# Entornos virtuales
+venv/
+env/
+
+# Archivos específicos de Python
+*.pyc
+__pycache__/
+
+# Archivos generados automáticamente
+DS_Store
+../.vscode/      
+*.pyc
+*.sqlite3
+
+# Archivos de datos sensibles
+*.env
+
+# Node.js dependencies
+node_modules/
+
+# npm lock file
+package-lock.json
+
+# schema
+schema.yml

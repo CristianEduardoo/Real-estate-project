@@ -1,0 +1,23 @@
+{% load static %}
+
+{% include "includes/head.html" %}
+
+<body> 
+    <header class="header">
+        <div class="contenedor contenido-header">
+            <div class="barra">
+                {% include "includes/barra_movil.html" %}
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor contenido-centrado">
+        <h2>Sesión cerrada correctamente</h2>
+        <p>¿Quieres iniciar sessión?</p>
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+    </main>
+
+    {% comment %} {% include "includes/footer.html" %} {% endcomment %}
+</body>
+
+</html>
