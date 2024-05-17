@@ -23,3 +23,15 @@ package-lock.json
 
 # schema
 schema.yml
+
+# data
+data/
+
+#confing
+config/
+
+#docker-compose
+docker-compose.yml
+
+#BienesRaices
+BienesRaices/
