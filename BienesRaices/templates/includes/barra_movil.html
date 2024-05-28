@@ -10,13 +10,29 @@
     <!-- btn dark -->
     <div class="derecha-btndark">
         <div class="separa-logo">
-            <p>{{ request.user.username }}</p>
+            <div class ="position-user">
+                {% if request.user.is_authenticated %}
+                <div class="sidebar-desplegable">
+                    <p class="user-logged">{{ request.user.username }}</p>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="dropdown-user">
+                    <div id="mySibar" class="siderbar-user">
+                        <nav class="navegacion-sidebar">
+                            <a href="{% url 'namespaceblog:blog-register' %}">Publicar un post</a>
+                            <a href="{% url 'namespacechat:home' %}">Sala de chat</a>
+                            <a href="{% url 'namespaceraices:testimonials' %}">Escribir una reseña</a>
+                            <a href="{% url 'logout' %}">Cerrar sesión</a>
+                        </nav>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
             <i class="fa-solid fa-moon dark-mode-btn" id="icon-moon"></i>
         </div>
     </div>
-
     <!-- burger btn -->
-    <div class="final-btn dropdown">
+    <div class="final-btn">
             <div class="mobile-menu"> 
                 <img src="{% static 'img/barras.svg' %}" />
             </div>
@@ -28,7 +44,14 @@
                         <a href="{% url 'namespaceblog:blog_list' %}">Blog</a>
                         <a href="{% url 'namespaceraices:contacto' %}">Contacto</a>
                         {% if request.user.is_authenticated %}
-                            <a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                            <div class="icon-wrapper">
+                                <a href="{% url 'logout' %}" class="icon-default">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                </a>
+                                <a href="{% url 'logout' %}" class="icon-hover">
+                                    <i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i>
+                                </a>
+                            </div>
                         {% else %}
                             <a href="{% url 'login' %}">Inicia sesión</a>
                         {% endif %}

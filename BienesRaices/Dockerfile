@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 # Variable de entorno para que Python no buforee stdout/stderr - input/output
 ENV PYTHONUNBUFFERED=1
 

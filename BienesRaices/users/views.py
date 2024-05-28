@@ -5,6 +5,9 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.http import JsonResponse
 
+# descorador para validar si el usuario esta autenticado
+from django.contrib.auth.decorators import login_required
+
 from django.utils.html import escape  # Función escape para escapar codigo malisioso
 
 # Importamos los modelos o formularios
@@ -61,6 +64,9 @@ def viewSignUp(request):
         except ValidationError:
             messages.error(request, "El correo electrónico no es válido.")
             return redirect("namespaceusers:user-register")
+
+        # Convertir la primera letra del username a mayúsculas
+        username = username.capitalize()
 
         # Crear un nuevo usuario con los datos del formulario
         user = User.objects.create_user(

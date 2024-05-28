@@ -4,7 +4,7 @@
     <!--=============== Bibliotecas y frameworks ===============-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="{% static 'css/login.css' %}?v=5" />
+    {% comment %} <link rel="stylesheet" href="{% static 'css/login.css' %}?v=5" /> {% endcomment %}
 {% endblock head %}
 
 {% block body %}
@@ -92,19 +92,24 @@
                             </div>
                             <!-- aqui el bloque de error de password no coinciden-->
                         </div>
-
-                        <div class="terminos"> {% comment %} class="terminos" => dark mode {% endcomment %}
-                            <label><input id="terminos" type="checkbox" name="terminos">He aceptado los terminos</label>
+                        
+                        <div class="group extra-term">
+                            <div class="terminos"> {% comment %} class="terminos" => dark mode {% endcomment %}
+                                <input id="terminos" type="checkbox" name="terminos">
+                                <label for="terminos">He aceptado los terminos y condiciones</label>
+                            </div>
+                            <!-- aqui el bloque de error de terminos y condiciones -->
                         </div>
 
                         <div class="group div-enviar">
                             <input class="enviar" type="submit" value="Registrate">
                         </div>
-                        <div>
-                            <p>¿Ya dispones de una cuenta? <a href="/">Inicia Sesión </a></p>
-                        </div>
-                        <div>
-                            <p><a href="/">Terminos y condiciones</a></p>
+                        <div class="terminos-login">
+                            <div class="log-term">
+                                <p>¿Ya dispones de una cuenta?</p>
+                                <a href="{% url 'login' %}">Inicia Sesión </a>
+                            </div>
+                                <p><a href="/">Terminos y condiciones</a></p>
                         </div>
                     </form>
                 </div>

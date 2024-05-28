@@ -1,6 +1,7 @@
 $(function () {
   console.log(user, room_id);
-
+  console.log("/ws/chat...");
+  
     /* === Ruta para el web socket == */
     let url = "ws://" + window.location.host + "/ws/chat/room/" + room_id + "/";
     console.log(url);

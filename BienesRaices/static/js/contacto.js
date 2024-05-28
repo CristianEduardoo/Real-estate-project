@@ -64,8 +64,29 @@ function validateField(fieldName, fieldValue) {
 }
 
 function isValidEmail(email) {
+  const commonDomains = ["gmail", "hotmail", "outlook", "yahoo", "aol"]; // Agrega otros dominios comunes si es necesario
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+
+  // Dividir el correo electrónico en nombre de usuario y dominio
+  const parts = email.split("@");
+  if (parts.length !== 2) {
+    return false; // El correo electrónico no tiene un formato válido
+  }
+
+  const domain = parts[1];
+  if (!emailRegex.test(email)) {
+    return false; // El formato del correo electrónico no es válido
+  }
+
+  // Verificar si el dominio está en la lista de dominios comunes
+  const isValidDomain = commonDomains.some((commonDomain) =>
+    domain.includes(commonDomain)
+  );
+  if (!isValidDomain) {
+    return false; // El dominio no es uno de los dominios comunes
+  }
+
+  return true; // El correo electrónico es válido
 }
 
 function isValidPhone(phone) {

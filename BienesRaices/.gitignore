@@ -22,16 +22,16 @@ node_modules/
 package-lock.json
 
 # schema
-schema.yml
+#schema.yml
 
 # data
-data/
+#data/
 
 #confing
-config/
+#config/
 
 #docker-compose
-docker-compose.yml
+#docker-compose.yml
 
 #BienesRaices
-BienesRaices/
+#BienesRaices/

@@ -10,14 +10,13 @@
             </div>
         </div>
     </header>
-    <main class="contenedor seccion contenido-centrado">
+    <main class="contenedor sidebar">
         <h1>Nuestro Blog</h1>
         <div class="entrada-bienvenido">
             {% if request.user.is_authenticated %}
                 <div class="entrada-sesion">
                     <div>
                         <p>Bienvenido {{ request.user.username }}</p>
-
                         <a href="{% url 'namespacechat:room-datail' room.id %}">{{ room.name }}</a>
                     </div>
                     <div>
@@ -25,11 +24,8 @@
                     </div> 
                 </div>      
             {% else %}
-                <div class="entrada-sesion">
-                    <div>
-                        {% comment %} <p class="btn-sesion-blog"><a href="{% url 'login' %}">Inicia sesión</a></p> {% endcomment %}
-                    </div>
-                    <div class="entrada-registro"> 
+                <div class="entrada-nosesion">
+                    <div class=""> 
                         <p>¿Te gustaria ser parte de nuestra comunidad?</p>
                         <p>¿Quieres publicar un blog?</p>
                         <p><a href="{% url 'namespaceusers:user-register' %}">¡Registrate!</a></p>

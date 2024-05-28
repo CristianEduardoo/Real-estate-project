@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Testimoniales
+from django.utils.text import Truncator
 
 # Register your models here.
 
@@ -26,3 +27,17 @@ class UserAdmin(admin.ModelAdmin):
 
     class Meta:
         model = User
+
+
+@admin.register(Testimoniales)
+class TestimonialesAdmin(admin.ModelAdmin):
+    list_display = ["usuario", "get_short_testimonial"]
+    list_filter = ["usuario"]
+
+    class Meta:
+        verbose_name_plural = "Testimoniale"
+
+    def get_short_testimonial(self, obj):
+        return Truncator(obj.contenido).words(5)
+
+    get_short_testimonial.short_description = "Contenido"

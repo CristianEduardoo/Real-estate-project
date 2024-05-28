@@ -76,4 +76,42 @@
     .con-otros a {
         border: 0.1rem solid $blanco;
     }
+
+    /*=============== Testimoniales ===============*/
+    .formTestimonials p{
+        color: $amarillo;
+    }
+    .formTestimonials textarea {
+        border: 1px solid $amarillo;
+    }
+
+    /*=============== Form Created Blog ===============*/
+    .group-createBlog{
+        label{
+            color: $blanco;;
+        }
+
+        input {
+            border: 0.1rem solid $amarillo;
+        }
+
+        textarea{
+            border: 0.1rem solid $amarillo;
+        }
+    }
+
+    /*=============== Logged - Out ===============*/
+    .LoggedOut_btn{
+        a {
+            border: 0.1rem solid $amarillo;
+        }
+    }
+
+    /*=============== Blog -list ===============*/
+    .entrada-nosesion{
+        a{
+            color: $amarillo;
+        }
+    }
+
 }

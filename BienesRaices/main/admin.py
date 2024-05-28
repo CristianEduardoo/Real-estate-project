@@ -38,7 +38,7 @@ class PropiedadesAdmin(admin.ModelAdmin):
     list_filter = ["titulo"]
 
     class Meta:
-        verbose_name_plural = "Propiedades"
+        verbose_name_plural = "Propiedade"
 
     def get_short_description(self, obj):
         return Truncator(obj.descripcion).words(5)
@@ -50,7 +50,7 @@ class PropiedadesAdmin(admin.ModelAdmin):
     get_short_contentido.short_description = "Contenido"
     # .short_description => atributo especial que puedo asignar a una función personalizada
     # Descripción => Nombre más legible y descriptivo para la columna que representa la salida en la interfaz del Admin de Django
-    
+
 
 # Decoradores para manejar mejor la UI del Admin en la web
 @admin.register(Ventas)

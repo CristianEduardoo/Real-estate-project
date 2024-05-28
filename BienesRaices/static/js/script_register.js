@@ -87,8 +87,29 @@ function validateField(fieldName, fieldValue) {
 }
 
 function isValidEmail(email) {
+  const commonDomains = ["gmail", "hotmail", "outlook", "yahoo", "aol", ]; // Agrega otros dominios comunes si es necesario
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+
+  // Dividir el correo electrónico en nombre de usuario y dominio
+  const parts = email.split("@");
+  if (parts.length !== 2) {
+    return false; // El correo electrónico no tiene un formato válido
+  }
+
+  const domain = parts[1];
+  if (!emailRegex.test(email)) {
+    return false; // El formato del correo electrónico no es válido
+  }
+
+  // Verificar si el dominio está en la lista de dominios comunes
+  const isValidDomain = commonDomains.some((commonDomain) =>
+    domain.includes(commonDomain)
+  );
+  if (!isValidDomain) {
+    return false; // El dominio no es uno de los dominios comunes
+  }
+
+  return true; // El correo electrónico es válido
 }
 
 function isValidPhone(phone) {
@@ -166,9 +187,7 @@ function validateFormRegister() {
 
     if (fieldName === "password1" && !isValidPassword(fieldValue)) {
       isValid = false;
-      showFieldError(
-        fieldName,
-        "La contraseña debe tener al menos 8 caracteres y contener letras, números y símbolos"
+      showFieldError(fieldName, "La contraseña debe tener al menos 8 caracteres y contener letras, números y símbolos"
       );
     }
 
@@ -181,6 +200,12 @@ function validateFormRegister() {
         isValid = false;
         showFieldError(fieldName, "El campo contraseña es obligatorio");
       }
+    }
+
+    if (fieldName === "terminos" && !input.checked) {
+      console.log('debugenado');
+      isValid = false;
+      showFieldError(fieldName, "Tienes que aceptar los términos y condiciones");
     }
   });
 

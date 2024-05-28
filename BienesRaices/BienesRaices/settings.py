@@ -12,7 +12,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # También, es buena práctica definir la URL para los archivos de medios.
 # Para acceder a los archivos de medios desde el navegador.
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/code/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") # first
+# MEDIA_ROOT = "/code/media/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -21,10 +22,9 @@ MEDIA_ROOT = "/code/media/"
 SECRET_KEY = 'django-insecure-ltlepyqshs^*!m7-hwa2&4pi26-3dy*ns(7*j*5cwyy!v@eh9#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 # Aplicaciones de terceros se recomienda primero en la lista
@@ -93,14 +93,25 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "BienesRaices",
+#         "USER": "admin",
+#         "PASSWORD": "123qwe@@",
+#         "HOST": "db", # from my docker-compose.yml
+#         "PORT": "5432"
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "BienesRaices",
-        "USER": "admin",
-        "PASSWORD": "123qwe@@",
-        "HOST": "db", # from my docker-compose.yml
-        "PORT": "5432"
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "Real-estate-project",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "3306",
     }
 }
 
@@ -139,13 +150,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = '/code/static/'
+STATIC_URL = '/static/'
+# STATIC_ROOT = '/code/static/'
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"), # first
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

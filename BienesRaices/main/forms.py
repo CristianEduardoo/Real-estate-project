@@ -3,6 +3,9 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils.html import escape
 
+# OBLIGATORIO, si queremos que se registre en la DB, debemos inportar como en admin.py
+from users.models import Testimoniales
+
 
 class ContactForm(forms.Form):
     # ======== Campos de información personal ========
@@ -96,3 +99,23 @@ class ContactForm(forms.Form):
     def clean_mensaje(self):
         mensaje = self.cleaned_data["mensaje"].strip()
         return escape(mensaje)
+
+
+class TestimonialForm(forms.ModelForm):
+
+    contenido = forms.CharField(label="Contenido", widget=forms.Textarea, required=True)
+
+    def clean_contenido(self):
+        contenido = self.cleaned_data["contenido"].strip()
+        max_words = 20  # define la cantidad máxima de palabras permitidas
+        if len(contenido.split()) > max_words:
+            raise forms.ValidationError(
+                f"El contenido no puede tener más de {max_words} palabras"
+            )
+        return escape(contenido)
+
+    class Meta:
+        model = Testimoniales
+        fields = [
+            "contenido"
+        ]

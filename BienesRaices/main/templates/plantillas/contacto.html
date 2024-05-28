@@ -24,9 +24,10 @@
                             <legend>Informacion personal</legend>
                             <div class="group">
                                 <div>
-                                    <label for="nombre">Nombre completo *</label>
+                                    <label for="nombre">Nombre completo <span>*</span></label>
                                     {% if request.user.is_authenticated %}
                                         <input id="nombre" type="text" name="nombre" value="{{ request.user.username }}" placeholder="Tu nombre" disabled>
+                                        <input id="nombre" type="hidden" name="nombre" value="{{ request.user.username }}">
                                     {% else %}
                                         <input id="nombre" type="text" name="nombre" placeholder="Tu nombre" required>
                                     {% endif %}
@@ -37,14 +38,14 @@
                             <div class="email-phone">
                                 <div class="group">
                                     <div>
-                                        <label for="email">Email *</label>
+                                        <label for="email">Email <span>*</span></label>
                                         <input id="email" type="email" name="email" placeholder="Tu email" required>
                                     </div>
                                     <!-- aqui el bloque de error de email -->
                                 </div>
                                 <div class="group">
                                     <div>
-                                        <label for="telefono">Teléfono *</label>
+                                        <label for="telefono">Teléfono <span>*</span></label>
                                         <input id="telefono" type="tel" name="telefono" placeholder="Tu teléfono" required>
                                     </div>
                                     <!-- aqui el bloque de error de teléfono -->
@@ -52,7 +53,7 @@
                             </div>
                             <div class="group">
                                 <div>
-                                    <label for="mensaje">Mensaje *</label>
+                                    <label for="mensaje">Mensaje <span>*</span></label>
                                     <textarea id="mensaje" name="mensaje" placeholder="Escribe un breve mensaje" required></textarea>
                                 </div>
                                 <!-- aqui el bloque de error de mensaje -->
@@ -74,7 +75,7 @@
                             </div>
                             <div>
                                 <h4>Ubicación</h4>
-                                <p>calle perdida 123</p>
+                                <p>calle del éxito 321</p>
                             </div>
                         </div>
                         <div class="icon-flex">
@@ -83,7 +84,7 @@
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>email@email.com</p>
+                                <p>agentes@bienesraices.com</p>
                             </div>
                         </div>
                             <div class="icon-flex final-map">
@@ -92,7 +93,7 @@
                             </div>
                             <div>
                                 <h4>Teléfono</h4>
-                                <p>+ 34 675 405 555</p>
+                                <p>+ 34 053 920 193</p>
                             </div>
                         </div>
                         <div class="form-iframe">

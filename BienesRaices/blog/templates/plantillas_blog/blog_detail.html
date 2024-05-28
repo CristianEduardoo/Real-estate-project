@@ -11,22 +11,21 @@
         </div>
     </header>
 
-    <main class="contenedor contenido-centrado comodin">
+    <main class="contenedor"> {% comment %} contenido-centrado comodin {% endcomment %}
         <h1>{{ blog_detail.title }}</h1>
+        <div class="div_blogDetails">
+            <picture>
+                {% if blog_detail.img_webp %}
+                    <source srcset="{{blog_detail.img_webp.url}}" type="image/webp">
+                {% endif %} 
+                    <img loading="lazy" width="200" height="300" src="{{ blog_detail.img_jpg.url }}" alt="Imagen Blog">
+            </picture>
 
-        <picture>
-            {% if blog_detail.img_webp %}
-                <source srcset="{{blog_detail.img_webp.url}}" type="image/webp">
-            {% endif %} 
-                <img loading="lazy" width="200" height="300" src="{{ blog_detail.img_jpg.url }}" alt="Imagen Blog">
-        </picture>
+            <div>
+                <p class="informacion-meta">Escrito el: <span>{{ blog_detail.fecha }}</span> por: <span>{{ blog_detail.nombre_titular }}</span></p>
 
-        <p class="informacion-meta">Escrito el: <span>{{ blog_detail.fecha }}</span> por: <span>{{ blog_detail.nombre_titular }}</span></p>
-
-        <div>
-            <p>
-                {{ blog_detail.contenido }}
-            </p>
+                <p>{{ blog_detail.contenido }}</p>
+            </div>
         </div>
     </main>
 

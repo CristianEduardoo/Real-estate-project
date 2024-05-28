@@ -17,7 +17,7 @@ def viewBlog(request):
     # Traemos la sala de chat
     room = Room.objects.first()
     # Query de los blogs
-    query_result = Blog.objects.all()[:4]
+    query_result = Blog.objects.all().order_by("-id")[:4]
 
     return render(request, "plantillas_blog/blog.html", {"clave": query_result, "room": room})
 

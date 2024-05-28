@@ -1,3 +1,4 @@
+/* ========== main parte inferios blog/testimoniales ========== */
 @include desktop {
     .seccion-inferior {
         display: grid;
@@ -5,6 +6,8 @@
         column-gap: 10rem;
     }
 }
+
+
 
 .entrada-blog {
     margin-bottom: 10rem;
@@ -79,16 +82,13 @@
     p{
         margin: 0rem;
     }
+}
 
-    .btn-sesion-blog{
-        margin: 2rem 0rem 4rem 0rem;
-            @include tablet {
-                margin: 0rem;
-            }
+.entrada-nosesion{
+    display: flex;
+    justify-content: center;
+
+    p {
+            margin: 0rem;
     }
-
-    .cerrar-sesion-btn{
-        margin-top: 2rem;
-    }
-
 }

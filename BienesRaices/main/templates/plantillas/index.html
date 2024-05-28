@@ -81,7 +81,7 @@
 
     <div class="contenedor seccion-inferior">
         <section> <!-- section 1 -->
-            <h3>Nuestro Blog</h3>
+            <h3 class="h3Index">Nuestro Blog</h3>
             {% for blog in solo_dos %}
                 <article class="entrada-blog"> <!-- blog Inicio -->
                     <div>
@@ -106,13 +106,14 @@
         </section> <!-- Fin section 1 -->
 
         <section class="testimoniales"> <!-- section 2 -->
-            <h3>Testimoniales</h3>
-
+            <h3 class="h3Index">Testimoniales</h3>
             <div class="testimonial">
-                <blockquote>
-                    El personal se comportó de una excelente forma, muy buena atención y la casa que me ofrecieron cumple con todas mis expectativas.
-                </blockquote>
-                <p>- Cristian Castro</p>
+                {% for testimonial in testimoniales %}
+                    <div class="mySlides fade">
+                        <q>{{ testimonial.contenido }}</q>
+                        <p class="author">- {{ testimonial.usuario.username }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </section> <!-- Fin section 2 -->
     </div>
