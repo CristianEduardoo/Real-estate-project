@@ -49,9 +49,11 @@
                             <a href="{% url 'namespaceusers:user-register' %}">Regístrate</a>
                         </div>
 
-                        <div class="olvidaste">
-                            <a href="https://myaccount.google.com/" target="_blank">¿Olvidaste la contraseña?</a>
-                        </div>
+                        {% comment %} 
+                            <div class="olvidaste">
+                                <a href="https://myaccount.google.com/" target="_blank">¿Olvidaste la contraseña?</a>
+                            </div>
+                        {% endcomment %}
 
                         <div class="group div-enviar">
                             <input class="enviar" type="submit" value="Iniciar Sesión">
@@ -70,7 +72,7 @@
                                 </div>
                             </a>
 
-                            <a class="btn-facebook" href="https://www.facebook.com/" target="_blank">
+                            <a class="btn-facebook" href="{% url 'social:begin' 'facebook' %}" target="_blank">
                                 <div class="separacion">
                                     <img loading="lazy" src="{% static 'img/login/square-facebook.svg' %}" alt="GoogleIcon149" /><span>Login con Facebook</span>
                                 </div>

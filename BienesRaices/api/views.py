@@ -16,5 +16,3 @@ class PropiedadesViewSet(viewsets.ModelViewSet):
     """ def get_queryset(self):
         queryset = self.queryset
         return queryset  # Devolvemos el queryset  """
-
-

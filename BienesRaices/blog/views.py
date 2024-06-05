@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib import messages
+from django.http import JsonResponse
 from chat.models import Room  # Importa el Room User de la app chat
 from django.utils import timezone
 
@@ -36,6 +37,13 @@ def viewBlogDetail(request, id):
 # descorador para validar si el usuario esta autenticado
 @login_required
 def viewCreateBlog(request):
+
+    user = request.user
+
+    # Verificar si el usuario ya tiene un blog escrito
+    if Blog.objects.filter(usuario=user).exists():
+        messages.error(request, "Ya has escrito un blog.")
+
     if request.method == "POST":
         form = BlogForm(request.POST, request.FILES)
         if (form.is_valid()):  # valida  los campos del formulario, que no esten vacion, etc
@@ -43,6 +51,7 @@ def viewCreateBlog(request):
             # Si el formulario es válido, guardamos el blog en la base de datos
             new_blog = form.save(commit=False)
             new_blog.nombre_titular = request.user.username  # Establecer el nombre del titular como el nombre de usuario autenticado
+            new_blog.usuario = (request.user)
             new_blog.save()
 
             # Guarda el nuevo registro en BD
@@ -61,3 +70,11 @@ def viewCreateBlog(request):
         form = BlogForm(initial=initial_data)  # Pasar la fecha actual como valor inicial para el campo de fecha
 
     return render(request, "plantillas_blog/create_blog.html", {"registrar_blog": form})
+
+
+# Endpoind de verificacion de usuario y evitar que vuelva a escribir
+@login_required
+def check_user_createBlog(request):
+    user = request.user
+    has_blog = Blog.objects.filter(usuario=user).exists()
+    return JsonResponse({"has_blog": has_blog})

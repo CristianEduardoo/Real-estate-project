@@ -11,11 +11,11 @@ from .models import Room
 
 def viewHome(request):
     # rooms = Room.objects.all()
-    room = Room.objects.first()
-    return render(request, "chat/home.html", {"room": room})
+    room_name = Room.objects.first()
+    return render(request, "chat/home.html", {"room_name": room_name})
 
 
-# ====== Codigo para permitir a cualquier usuario entrar en cualquier sala ======
+# ====== Codigo para permitir a cualquier usuario logged entrar en cualquier sala ======
 @login_required
 def viewRoom(request, room_id):
     try:
@@ -23,7 +23,7 @@ def viewRoom(request, room_id):
     except Room.DoesNotExist:
         error_message = "La sala de chat no existe."
         return render( request, "chat/home.html",
-            {"error_message": error_message, "rooms": Room.objects.all()},
+            {"error_message": error_message, "room_name": Room.objects.first()},
         )
 
     return render(request, "chat/room.html", {"room": room})

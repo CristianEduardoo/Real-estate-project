@@ -1,4 +1,4 @@
-import json
+import json # Todas las comunicaciones son por via JSON
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from django.utils import timezone
@@ -41,6 +41,7 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name, self.channel_name
         )
 
+        # Para realizar la conexión
         self.accept()
 
         # Despues de acceptar
@@ -121,6 +122,8 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name, self.channel_name
         )
+
+    # ======================== Funciónes externas ======================== */
 
     # === Función externa de la funcion connect/disconnect === */
     def user_list(self, event):

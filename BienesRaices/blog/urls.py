@@ -7,4 +7,5 @@ urlpatterns = [
     path("", views.viewBlog, name="blog_list"),
     path("<int:id>/", views.viewBlogDetail, name="blog_details"),  # <int:id> una url dinámica con el ID de cada BLOG
     path("blog-register/", views.viewCreateBlog, name="blog-register"),
+    path("check_user_createBlog/", views.check_user_createBlog, name="check_user_createBlog"),
 ]

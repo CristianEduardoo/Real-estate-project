@@ -1,6 +1,5 @@
 $(function () {
-  console.log(user, room_id);
-  console.log("/ws/chat...");
+    console.log(user, room_id); // From room.html
   
     /* === Ruta para el web socket == */
     let url = "ws://" + window.location.host + "/ws/chat/room/" + room_id + "/";
@@ -69,7 +68,7 @@ $(function () {
     let message = document.querySelector("#inputMessage");
     // console.log(message.value.trim());
 
-    // para reiniciar el imput
+    // para reiniciar el input
     if (message.value.trim() !== "") {
       loadMessageHTML(message.value.trim());
       // ===> IMPORTANTE!! ===> Enviar mensaje al servidor

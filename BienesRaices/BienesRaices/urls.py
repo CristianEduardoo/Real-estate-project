@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include # include para incluir otras url de otras aplicaciones ejm: 'blog'
 
-# Para acceder a los archivos de medios desde el navegador.
+# Para acceder a los archivos statics y media desde el navegador.
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -21,6 +21,7 @@ urlpatterns = [
     path("blog/", include("blog.urls", namespace="blog")),
     path("signup-users/", include("users.urls", namespace="signup-users")),
     path("chat/", include("chat.urls", namespace="chat-room")),
+    path('oauth/', include('social_django.urls', namespace='social')),  # <-- Social Media
 ]
 
 # if settings.DEBUG === True

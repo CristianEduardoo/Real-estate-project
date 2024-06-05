@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Enlazar la función submitFormTestimonials al evento de clic del botón de envío
   const submitButton = document.querySelector(".enviar");
-  submitButton.addEventListener(
-    "click",
-    submitFormTestimonials
-  ); /* valida el envio */
+  submitButton.addEventListener("click",submitFormTestimonials); /* valida el envio */
 });
 
 function clearErrors() {
@@ -13,7 +10,7 @@ function clearErrors() {
 }
 
 function isValidContent(content) {
-  const words = content.trim().split(/\s+/); // Dividir por cualquier espacio en blanco
+  const words = content.trim().split(/\s+/); // Dividir por cualquier espacio en blanco / palabras 
   return words.length <= 20;
 }
 

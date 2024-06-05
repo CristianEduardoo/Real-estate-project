@@ -1,7 +1,13 @@
-@include tablet{
-    .contenedor-anuncios{
+.contenedor-anuncios {
+
+    @include tablet {
+        @include grid(2, 2rem);
+    }
+
+    @include desktop {
         @include grid(3, 2rem);
     }
+
 }
 
 .anuncio{
@@ -43,14 +49,25 @@
     justify-content: space-around;
     padding: 0rem;
     list-style: none;
+    align-items: center;
 
     li{
         display: flex;
         column-gap: 0.7rem;
+        align-items: center;
     }
 
 }
 
-.alturamin{
-    min-height: 15rem;
+// .alturamin{
+//     min-height: 15rem;
+// }
+
+
+/* ==================== Propiedades - Details  ==================== */
+
+.propiedad-detail{
+    p{
+        text-align: center;
+    }
 }

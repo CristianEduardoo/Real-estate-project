@@ -48,7 +48,7 @@ def viewTestimoniales(request):
 
     # Verificar si el usuario ya tiene una reseña
     if Testimoniales.objects.filter(usuario=user).exists():
-        messages.error(request, "Ya has escrito una reseñe.")
+        messages.error(request, "Ya has escrito una reseña.")
 
     if request.method == "POST":
         form = TestimonialForm(request.POST)
@@ -70,6 +70,7 @@ def viewTestimoniales(request):
     return render(request, "plantillas/testimoniales.html", {"form_testimoniales": form})
 
 
+# Endpoind de verificacion de usuario y evitar que vuelva a escribir
 @login_required
 def check_user_testimonial(request):
     user = request.user

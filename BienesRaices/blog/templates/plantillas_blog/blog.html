@@ -11,9 +11,12 @@
         </div>
     </header>
     <main class="contenedor sidebar">
-        <h1>Nuestro Blog</h1>
         <div class="entrada-bienvenido">
             {% if request.user.is_authenticated %}
+                <div>
+                    <h1>Nuestro Blog</h1>
+                </div>
+            {% comment %} 
                 <div class="entrada-sesion">
                     <div>
                         <p>Bienvenido {{ request.user.username }}</p>
@@ -22,7 +25,8 @@
                     <div>
                         <p ><a href="{% url 'namespaceblog:blog-register' %}">Publicar blog</a></p>
                     </div> 
-                </div>      
+                </div>
+            {% endcomment %}          
             {% else %}
                 <div class="entrada-nosesion">
                     <div class=""> 

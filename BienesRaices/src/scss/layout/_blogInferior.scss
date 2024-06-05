@@ -64,7 +64,7 @@
 }
 
 .entrada-bienvenido{
-    margin-bottom: 5rem;
+    margin: 5rem 0rem;
     text-align: center;
 }
 
@@ -89,6 +89,11 @@
     justify-content: center;
 
     p {
-            margin: 0rem;
+        margin: 0rem;
     }
+
+    a{
+        color: $violeta;
+    }
+
 }

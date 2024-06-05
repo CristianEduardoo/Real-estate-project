@@ -70,8 +70,7 @@ function validateField(fieldName, fieldValue) {
       showFieldError(fieldName, "El campo contraseña es obligatorio");
     } else if (!isValidPassword(fieldValue)) {
       showFieldError(
-        fieldName,
-        "La contraseña debe tener al menos 8 caracteres y contener letras, números y símbolos"
+        fieldName, "La contraseña debe tener al menos 8 caracteres y contener letras, números y símbolos"
       );
     }
   }
@@ -84,6 +83,12 @@ function validateField(fieldName, fieldValue) {
       showFieldError(fieldName, "Las contraseñas no coinciden");
     }
   }
+}
+
+
+function isValidNameUser(content) {
+  const words = content.trim();
+  return words.length <= 15;
 }
 
 function isValidEmail(email) {
@@ -158,6 +163,11 @@ function validateFormRegister() {
       if (!fieldValue) {
         isValid = false;
         showFieldError(fieldName, "El campo nombre de usuario es obligatorio");
+      } else if (!isValidNameUser(fieldValue)) {
+        isValid = false;
+        showFieldError(
+          fieldName, "El nombre de usuario no puede tener más de 15 letras."
+        );
       }
     }
 

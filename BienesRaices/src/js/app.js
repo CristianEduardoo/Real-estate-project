@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   darkMode();
   applyDarkModeFromLocalStorage();
+  formatPrice();
   burgerMenu();
   // Envolver showSlides en try-catch
   try {
@@ -108,5 +109,28 @@ function userFuncions() {
     const sidebarUser = document.querySelector(".siderbar-user");
 
     sidebarUser.classList.toggle("mostrarSiber");
+  });
+}
+
+/*=============== Función formateador de precio ===============*/
+function formatPrice() {
+  // Función para formatear un número con comas como separadores de miles
+  function formatPriceBis(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  // Seleccionar todos los elementos que tienen la clase "precio"
+  const priceElements = document.querySelectorAll(".precio");
+
+  // Iterar sobre cada elemento seleccionado
+  priceElements.forEach(function (element) {
+    const priceText = element.textContent; // Obtener el contenido del span, que es el precio con el símbolo de euro
+    const priceNumber = parseFloat(
+      priceText.replace("€", "").replace(",", "").trim()
+    ); // Eliminar el símbolo de euro y comas, y convertir a número
+    if (!isNaN(priceNumber)) {
+      // Verificar que es un número válido
+      element.textContent = formatPriceBis(priceNumber) + "€"; // Formatear el número y volver a agregar el símbolo de euro
+    }
   });
 }

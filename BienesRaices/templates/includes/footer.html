@@ -1,15 +1,17 @@
 {% load static %} {% comment %} Cargar los archivos estaticos {% endcomment %}
 
 <footer class="footer">
-    <div class="contenido-footer">
-        <nav class="navegacion-footer">
-            <a href="{% url 'namespaceraices:nosotros' %}">Acerca de nosotros</a>
-            <a href="{% url 'namespaceraices:anuncios' %}">Anuncios</a>
-            <a href="{% url 'namespaceblog:blog_list' %}">Blog</a>
-            <a href="{% url 'namespaceraices:contacto' %}">Contacto</a> 
-        </nav>
+    <div class="div-footer contenedor">
+        <div class="contenido-footer">
+            <nav class="navegacion-footer">
+                <a href="{% url 'namespaceraices:nosotros' %}">Acerca de nosotros</a>
+                <a href="{% url 'namespaceraices:anuncios' %}">Anuncios</a>
+                <a href="{% url 'namespaceblog:blog_list' %}">Blog</a>
+                <a href="{% url 'namespaceraices:contacto' %}">Contacto</a> 
+            </nav>
+        </div>
+        <p class="copyright">&copy; Todos los derechos reservados 2024</p>
     </div>
-    <p class="copyright">&copy; Todos los derechos reservados 2024</p>
 </footer>
 
 <!--=============== JavaScript personalizado ===============-->

@@ -43,16 +43,16 @@ class BlogForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data["title"].strip()
-        if len(title.split()) > 5:
-            raise forms.ValidationError("El título no debe exceder las 5 palabras")
+        if len(title.split()) > 10:
+            raise forms.ValidationError("El título no debe exceder las 10 palabras")
         return escape(title)
 
     # def clean_nombre_titular => por defecto de sesion
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data["descripcion"].strip()
-        if len(descripcion.split()) > 10:
-            raise forms.ValidationError("La descripción no debe exceder las 10 palabras")
+        if len(descripcion.split()) > 22:
+            raise forms.ValidationError("La descripción no debe exceder las 22 palabras")
         return escape(descripcion)
 
     def clean_contenido(self):

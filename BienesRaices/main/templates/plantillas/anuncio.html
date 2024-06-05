@@ -14,29 +14,34 @@
     <main class="contenedor contenido-centrado">
         <h1>{{ details.titulo }}</h1>
 
-        <picture>
-            <source srcset="{{ details.img.url }}" type="image/webp">
-            <img loading="lazy" src="{{ details.img.url }}" alt="imagen de la propiedad">
-        </picture>
+        <div class="div_blogDetails">
+            <div class="propiedad-detail">
+                <picture>
+                    <source srcset="{{ details.img.url }}" type="image/webp">
+                    <img loading="lazy" src="{{ details.img.url }}" alt="imagen de la propiedad">
+                </picture>
 
-        <div class="resumen-propiedad">
-            <p class="precio">{{ details.precio }}€</p>
-            <ul class="iconos-caracteristicas">
-                <li>
-                    <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_wc.svg' %}" alt="icono wc">
-                    <p>{{ details.wc }}</p>
-                </li>
-                <li>
-                    <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_estacionamiento.svg' %}" alt="icono estacionamiento">
-                    <p>{{ details.garaje }}</p>
-                </li>
-                <li>
-                    <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_dormitorio.svg' %}" alt="icono habitaciones">
-                    <p>{{ details.habitaciones }}</p>
-                </li>
-            </ul>
+                <p><span class="precio">{{ details.precio }}€</span></p>
 
-            <p class="propiedad_descripcion">{{ details.contentido }}</p>
+                <ul class="iconos-caracteristicas">
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_wc.svg' %}" alt="icono wc">
+                        <p>{{ details.wc }}</p>
+                    </li>
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_estacionamiento.svg' %}" alt="icono estacionamiento">
+                        <p>{{ details.garaje }}</p>
+                    </li>
+                    <li>
+                        <img class="icono" loading="lazy" src="{% static 'img/iconos/icono_dormitorio.svg' %}" alt="icono habitaciones">
+                        <p>{{ details.habitaciones }}</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <p class="informacion-meta">{{ details.contentido }}</p>
+            </div>
         </div>
 
     </main>

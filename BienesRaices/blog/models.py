@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from users.models import User
 
 # Create your models here.
 
 # table Blog con sus campos title, img, nombre_titular, fecha, descripcion, contenido
 class Blog(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     nombre_titular = models.CharField(max_length=50, null=True, blank=True)
     img_jpg = models.ImageField(upload_to="blog/", verbose_name="Imagen JPG") # null=True, blank=True => blank indica que el campo no es obligatorio

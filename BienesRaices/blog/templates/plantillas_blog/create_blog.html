@@ -16,7 +16,7 @@
                 <div class="probando-img"></div>
             </section>
             <section class="section2">
-            <form class="formCreatedBlog" action='' method='POST' enctype="multipart/form-data">
+            <form class="formCreatedBlog" action="{% url 'namespaceblog:blog-register' %}" method='POST' enctype="multipart/form-data">
                 {% csrf_token %}
                 <h1>Registrar un nuevo Blog</h1>
 

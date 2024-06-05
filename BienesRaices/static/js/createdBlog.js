@@ -10,12 +10,17 @@ function clearErrors() {
 
 function isValidContentTitle(content) {
   const words = content.trim().split(/\s+/); // Dividir por cualquier espacio en blanco
-  return words.length <= 5;
+  return words.length <= 10;
 }
 
 function isValidContentDescription(content) {
   const words = content.trim().split(/\s+/); // Dividir por cualquier espacio en blanco
-  return words.length <= 10;
+  return words.length <= 22;
+}
+
+function isValidContent(content) {
+  const words = content.trim().split(/\s+/); // Dividir por cualquier espacio en blanco
+  return words.length <= 150;
 }
 
 function isValidJpg(file) {
@@ -64,7 +69,7 @@ function validateFormRegister() {
       } else if (!isValidContentTitle(fieldValue)) {
         isValid = false;
         showFieldError(
-          fieldName, "El título no puede tener más de 5 palabras."
+          fieldName, "El título no puede tener más de 10 palabras."
         );
       }
     }
@@ -76,7 +81,19 @@ function validateFormRegister() {
       } else if (!isValidContentDescription(fieldValue)) {
         isValid = false;
         showFieldError(
-          fieldName, "El contenido no puede tener más de 10 palabras."
+          fieldName, "El contenido no puede tener más de 22 palabras."
+        );
+      }
+    }
+
+    if (fieldName === "contenido") {
+      if (!fieldValue) {
+        isValid = false;
+        showFieldError(fieldName, "El campo de contenido es obligatorio");
+      } else if (!isValidContent(fieldValue)) {
+        isValid = false;
+        showFieldError(
+          fieldName, "El contenido no puede tener más de 150 palabras."
         );
       }
     }
@@ -106,27 +123,51 @@ function validateFormRegister() {
   return isValid;
 }
 
-/*=============== ENVÍO DE FORMULARIO ===============*/
-function submitFormCreatedBlog(event) {
-  event.preventDefault();
-  if (validateFormRegister()) {
-    const form = document.querySelector(".formCreatedBlog");
+// Solicitud fetch a un endpoint 
+function checkUserBlog(callback) {
+  fetch("/blog/check_user_createBlog")
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data.has_blog);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      callback(false);
+    });
+}
 
-    Swal.fire({
-      icon: "success",
-      title: "¡Formulario válido!",
-      text: "Enviando datos...",
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => {
-      form.submit();
-    });
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Por favor, corrige los errores en el formulario antes de enviarlo.",
-    });
-    console.log("Formulario inválido. No se puede enviar.");
-  }
+/*=============== ENVÍO DE FORMULARIO ===============*/
+function submitFormCreatedBlog(event)  {
+  event.preventDefault();
+
+  checkUserBlog((hasBlog) => {
+    if (hasBlog) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ya has escrito un blog.",
+      });
+    } else {
+      if (validateFormRegister()) {
+        const form = document.querySelector(".formCreatedBlog");
+
+        Swal.fire({
+          icon: "success",
+          title: "¡Formulario válido!",
+          text: "Enviando reseña...",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          form.submit();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Por favor, corrige los errores en el formulario antes de enviarlo.",
+        });
+        console.log("Formulario inválido. No se puede enviar.");
+      }
+    }
+  });
 }

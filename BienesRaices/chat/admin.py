@@ -26,5 +26,5 @@ class MessageAdmin(admin.ModelAdmin):
     list_filter = ("room", "user")
 
 
-# Otra forma de registrar en el Admin
+# Otra forma de registrar en el Admin => (Modelo, Clase)
 admin.site.register(Message, MessageAdmin)

@@ -1,5 +1,8 @@
-.footer {
+.footer{
     background-color: $grisOscuro;
+}
+
+.div-footer {
     align-items: center;
     margin-bottom: 0;
 
@@ -40,6 +43,7 @@
 
     @include desktop{
         justify-content: end;
+        padding-right: 0rem ;
     }
 }
 
@@ -52,6 +56,5 @@
     @include desktop {
         padding-bottom: 0rem;
         text-align: start;
-        padding-left: 3rem;
     }
 }

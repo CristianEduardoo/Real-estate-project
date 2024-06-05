@@ -12,7 +12,9 @@
     {% endif %}
     
     {% comment %} Desde viewHome {% endcomment %}
-    <a class="btn btn-success" href="{% url 'namespacechat:room-datail' room.id %}">{{ room.name }}</a>
+    <div>
+        <a class="btn btn-success" href="{% url 'namespacechat:room-datail' room_name.id %}">{{ room_name.name }}</a>
 
-    <a class="btn btn-primary mt-2 end" href="{% url 'namespaceraices:main' %}">Salir</a>
+        <a class="btn btn-primary" href="{% url 'namespaceraices:main' %}">Salir</a>
+    </div>
 {% endblock %}

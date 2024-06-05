@@ -12,8 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # También, es buena práctica definir la URL para los archivos de medios.
 # Para acceder a los archivos de medios desde el navegador.
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media") # first
 # MEDIA_ROOT = "/code/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") # first
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -24,9 +25,10 @@ SECRET_KEY = 'django-insecure-ltlepyqshs^*!m7-hwa2&4pi26-3dy*ns(7*j*5cwyy!v@eh9#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Solo va mi dominio ;)
 ALLOWED_HOSTS = ["*"]
 
-# Application definition
+# Application definition "channels",  # Biblioteca para manejar conexiones asíncronas
 # Aplicaciones de terceros se recomienda primero en la lista
 INSTALLED_APPS = [
     "daphne",  # app instalada para servidor asíncrono
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",  # libreria de tercero, para crear nuestra API => pip install djangorestframework
     "drf_spectacular",  # Herramienta para documentar => pip install drf-spectacular
+    "social_django",  # Facebook Social Media
     "api",  # aplicacion creada para la API
     "main",
     "blog",
@@ -46,32 +49,45 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",  # Facebook Social Media
 ]
 
 ROOT_URLCONF = 'BienesRaices.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],  # Referenciando a todos los templates del directorio
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates")
+        ],  # Referenciando a todos los templates del directorio
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",  # <-- Facebook
+                "social_django.context_processors.login_redirect",  # <-- Facebook
             ],
         },
     },
 ]
+
+# =============== Facebook Social Media =============== #
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.facebook.FacebookOAuth2",
+    "social_core.backends.twitter.TwitterOAuth",
+    "social_core.backends.github.GithubOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 # WSGI => WEB SERVER GATEAWAY INTERFACE => SYNCRONA
 WSGI_APPLICATION = "BienesRaices.wsgi.application"
@@ -89,6 +105,7 @@ CHANNEL_LAYERS = {
     },
 }
 
+# en lugar de localhost => redis
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -151,11 +168,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = '/code/static/'
+STATIC_ROOT = '/code/static/'
+
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"), # first
+    os.path.join(BASE_DIR, "static"), # first 1
 ]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -165,7 +188,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # =============== LOGIN =============== #
 # IMPORTANTE SI ES LOGIN -> REDIRECCIONAMOS. ambas constantes estan relacionadas
-LOGIN_REDIRECT_URL = "namespaceblog:blog_list"
+LOGIN_REDIRECT_URL = "namespaceraices:main"
 LOGIN_URL = "login"  # se redirigirá hacer login, si intenta acceder a una vista protegida sin haber iniciado sesión primero
 # Django redirigirá al usuario a la página de inicio de sesión, lo tiene por defecto, solo hay que crear el template
 
@@ -188,3 +211,8 @@ SPECTACULAR_SETTINGS = {
 
 # =============== Custom User =============== #
 AUTH_USER_MODEL = 'users.User'
+
+
+# =============== Facebook - Social Media =============== #
+SOCIAL_AUTH_FACEBOOK_KEY = "1392349014770454"
+SOCIAL_AUTH_FACEBOOK_SECRET = "b107f0c481a7f3719e447ce71674e470"
