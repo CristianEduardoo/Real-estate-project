@@ -1,0 +1,80 @@
+version: '3.8' # A partir de la versión 2.2 va el '3.8' => a partir de la 2.24 ya no es necesaria  
+
+# Definimos los servicios/paquetes, que forman parte de la aplicación
+# SE ORDENA EN ORDEN DE RELACION/DEPENDENCIAS, DE MAYOR INPORTANCIA A MENOR
+services:
+  db:
+    image: postgres:14.10 # version 14.10
+    restart: always # restaurar en caso se cae la DB
+    container_name: postgresql
+    volumes: # volumnes => persistencia de datos, cuando se apaga la maquina 
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+
+  pgadmin: # Definimos el servicio de pgadmin para ver los datos graficamente
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8081:80" # Cambiado para evitar conflictos con Nginx
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+
+
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+
+
+  web:
+    build: .
+    container_name: django 
+    # command: daphne -b 0.0.0.0 -p 8000 BienesRaices.asgi:application
+    volumes: # Persistencia de datos del codigo de programación
+      - .:/code
+      - ./static:/code/static
+      - ./media:/code/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      # - DJANGO_SETTINGS_MODULE=BienesRaices.settings  # Websockets
+    depends_on:
+      - db
+      # - redis
+
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./static:/code/static
+      - ./media:/code/media
+    depends_on:
+      - web
+
+
+
+volumes:
+  .:
+  .data:
+  .static:
+  pgadmin-data:  
