@@ -54,6 +54,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       # - DJANGO_SETTINGS_MODULE=BienesRaices.settings  # Websockets
+    env_file:  # Incluir el archivo .env
+      - ./.env
     depends_on:
       - db
       # - redis

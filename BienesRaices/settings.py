@@ -2,15 +2,16 @@ from pathlib import Path
 from environ import Env 
 import os  # Necesaria para el Login
 
-# Variables Globales
-env = Env()
-Env.read_env()
-
-ENVIRONMENT = env('ENVIRONMENT', default='production')
-
 # Primero, define la ruta base de tu proyecto.
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Variables Globales
+env = Env()
+env_file = os.path.join(BASE_DIR, ".env")  # Asegúrate que la ruta aquí sea correcta
+env.read_env(env_file)  # Lee el archivo .env desde la ruta especificada
+
+ENVIRONMENT = env("ENVIRONMENT", default="production")
 
 
 # Luego, define la ruta completa para el directorio de medios. Para guardar img, pdf, etc...
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",  # libreria de tercero, para crear nuestra API => pip install djangorestframework
     "drf_spectacular",  # Herramienta para documentar => pip install drf-spectacular
     "django_extensions",  # Social Media
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # whitenoise
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -76,6 +79,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "users.middleware.AutoLogoutMiddleware",  # Middleware personalizado en la app users
     "social_django.middleware.SocialAuthExceptionMiddleware",  # Facebook Social Media
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
 ]
 
 ROOT_URLCONF = 'BienesRaices.urls'
