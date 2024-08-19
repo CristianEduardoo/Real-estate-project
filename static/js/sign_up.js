@@ -96,7 +96,7 @@ function validateField(fieldName, fieldValue) {
 /* ============== Funciones para validar los campos de entrada ============== */
 // Función para evitar caracteres no validos  
 function isValidName(name) {
-  const nameRegex = /^[a-zA-Z ]*$/;
+  const nameRegex = /^[a-zA-ZÀ-ÿñÑ\s]+$/;
   return nameRegex.test(name);
 }
 

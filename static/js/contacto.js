@@ -70,9 +70,10 @@ function validateField(fieldName, fieldValue) {
 
 // Función para validar los campos de entrada
 function isValidName(name) {
-  const nameRegex = /^[a-zA-Z-' ]*$/;
+  const nameRegex = /^[a-zA-ZÀ-ÿñÑ\s]+$/;
   return nameRegex.test(name);
 }
+
 
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -66,7 +66,8 @@ def viewSignUp(request):
             return redirect("namespaceusers:user-register")
 
         # Convertir la primera letra del username a mayúsculas
-        username = username.capitalize()
+        # username = username.capitalize()
+        username = username.title()
 
         # Crear un nuevo usuario con los datos del formulario
         user = User.objects.create_user(

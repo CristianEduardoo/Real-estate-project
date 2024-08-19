@@ -5,14 +5,15 @@ from .serializers import PropiedadesSerializer  # Importamos el serializador
 
 # Create your views here.
 
-class PropiedadesViewSet(viewsets.ModelViewSet):
+class PropiedadesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Propiedades.objects.all()  # queryset => es convención. Le decimos que nos traiga todos las propiedades
     serializer_class = PropiedadesSerializer  # Le decimos que serializador va a usar
 
-    permission_classes = [
+    # No necesitas especificar permission_classes, porque ReadOnlyModelViewSet ya restringe a solo lectura
+    """ permission_classes = [
         permissions.AllowAny  # Le decimos que cualquier usuario puede acceder a los datos
-    ]
-    
+    ] """
+
     """ def get_queryset(self):
         queryset = self.queryset
         return queryset  # Devolvemos el queryset  """
