@@ -30,7 +30,7 @@ Además, también se desarrolló una **API Restful** para gestionar las propieda
 
 ## Tecnologías Utilizadas
 
-Este proyecto fue previamente desplegado en los **servicios de AWS**, específicamente en **Elastic Beanstalk**. Actualmente, debido a la falta de créditos para este servicio, el proyecto está desplegado en el **servidor de PythonAnywhere**.
+Este proyecto fue empaquetado en un contenedor **Docker** y previamente desplegado en los **servicios de AWS**, específicamente en **Elastic Beanstalk**. Actualmente, debido a la falta de créditos para este servicio, el proyecto está desplegado en el **servidor de PythonAnywhere**.
 
 <table>
   <tr>
@@ -66,7 +66,7 @@ La base de datos, mostrada en la imagen a continuación, está diseñada para ge
 La base de datos evolucionó para soportar funcionalidades adicionales conforme el proyecto creció, como la publicación de blogs y reseñas por parte de los usuarios registrados, así como para gestionar un registro de vendedores, compradores y la relación entre ellos.
 
 <p align="center">
-  <img src="./static/readme/DDBB-3.png" alt="Diagrama de la Base de Datos" />
+  <img src="./static/readme/DDBB.png" alt="Diagrama de la Base de Datos" />
 </p>
 
 ## API Restful - Bienes Raíces
@@ -77,15 +77,16 @@ Esta API permite realizar operaciones exclusivamente de lectura sobre las propie
 
 **Uso de la API**:
 
-Te recomiendo visitar el repositorio donde se prueba la **API Restful**. Puedes obtener la información desde cualquier interfaz en la que estés trabajando o con la que te sientas más familiarizado utilizando el siguiente enlace:
+Te recomiendo visitar el repositorio donde se prueba la **API Restful**. En este repositorio se explican los pasos a seguir, como tanbién el código donde puedes clonar el repositorio.
 
 ```bash
-  https://link-to-api
+  https://github.com/CristianEduardoo/Real-Estate-API-Client
 ```
-En este repositorio se explican los pasos para el uso de la **API Restful:**
+
+No obstante, puedes obtener la información desde cualquier interfaz en la que estés trabajando o con la que te sientas más familiarizado utilizando el siguiente enlace:
 
 ```bash
-  https://link-to-repository
+  https://pypycris.pythonanywhere.com/api/v1/propiedades/
 ```
 
 ## Contacto
