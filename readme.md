@@ -10,7 +10,7 @@ Puedes encontrar la documentación completa en el siguiente archivo PDF: [Docume
 
 **Bienes Raíces** es una plataforma web destinada a la venta de propiedades de lujo. El proyecto fue desarrollado como parte de mi Proyecto de Fin de Ciclo (TFC) en el ciclo formativo de Desarrollo de Aplicaciones Web (DAW).
 
-En este proyecto, reflejo mis habilidades tanto en Frontend, Backend, como en la infraestructura y despliegue de la aplicación.
+En este proyecto, reflejo mis habilidades tanto en Frontend, Backend, como en la infraestructura y despliegue de la aplicación, así como mi capacidad para adaptarme a nuevas tecnologías.
 
 El proyecto es completamente escalable, lo cual le confiere un gran potencial de crecimiento. Durante su desarrollo, se implementaron varios cambios siguiendo un **ciclo de vida en espiral**. Este proyecto incluye funcionalidades tanto para **usuarios finales** como para **clientes potenciales** y **usuarios administradores**.
 
@@ -20,10 +20,10 @@ Además, también se desarrolló una **API Restful** para gestionar las propieda
 
 - **Registro de Usuarios**: A través de la API de Google o mediante un formulario de registro.
 - **Administración de Propiedades**: Sistema CRUD para gestionar propiedades (crear, leer, actualizar, eliminar).
-- **Formulario de Contacto**: Permite a los usuarios interesados comunicarse directamente con la inmobiliaria.
 - **Sección de Anuncios de las Propiedades**: Se listan todas las propiedades en venta.
-- **Sección de Blog**: Publicaciones sobre consejos, mejoras del hogar y noticias del mercado inmobiliario de lujo.
+- **Formulario de Contacto**: Permite a los usuarios interesados comunicarse directamente con la inmobiliaria.
 - **Sección de Reseñas**: Donde el usuario registrado puede dejar una reseña.
+- **Sección de Blog**: Publicaciones sobre consejos, mejoras del hogar y noticias del mercado inmobiliario de lujo.
 - **Navegación Intuitiva**: Diseño moderno y responsivo, adaptado para diferentes dispositivos.
 - **Modo Oscuro (Dark Mode)**: Opción para alternar entre los modos de visualización claro y oscuro.
 - **Desarrollo de una API Restful**: Una API para las propiedades usando Django Rest Framework.
@@ -77,10 +77,16 @@ Esta API permite realizar operaciones exclusivamente de lectura sobre las propie
 
 **Uso de la API**:
 
-Te recomiendo visitar el repositorio donde se prueba la **API Restful**. En este repositorio se explican los pasos a seguir, como tanbién el código donde puedes clonar el repositorio.
+Te recomiendo visitar el repositorio donde se prueba la **API Restful**. En este repositorio se explican los pasos a seguir, como también el código donde puedes clonar el repositorio.
 
 ```bash
   https://github.com/CristianEduardoo/Real-Estate-API-Client
+```
+
+Si deseas ver el resultado final del repositorio, probando la API Restful, visita la siguiente URL. Ten en cuenta que el proyecto esta desplegado en un servidor gratuito y puede tardar un poquito, se paciente 😉
+
+```bash
+  https://api.cristian-castro.com/
 ```
 
 No obstante, puedes obtener la información desde cualquier interfaz en la que estés trabajando o con la que te sientas más familiarizado utilizando el siguiente enlace:
