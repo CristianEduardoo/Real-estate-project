@@ -44,12 +44,20 @@
     font-size: 3rem;
 }
 
+.extra-p{
+    text-align: center;
+}
+
 .iconos-caracteristicas{
     display: flex;
     justify-content: space-around;
     padding: 0rem;
     list-style: none;
     align-items: center;
+
+    @include desktop {
+        justify-content: space-evenly;
+    }
 
     li{
         display: flex;
@@ -60,21 +68,13 @@
     img{
         padding: 0rem;
     }
-
 }
+
+
 
 // .alturamin{
 //     min-height: 15rem;
 // }
-
-
-/* ==================== Propiedades - Details  ==================== */
-
-.propiedad-detail{
-    p{
-        text-align: center;
-    }
-}
 
 /* ==================== Propiedades-Details / Blog-Details  ==================== */
 .details{
