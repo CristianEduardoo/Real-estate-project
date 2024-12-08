@@ -40,7 +40,8 @@ services:
 
 
   web:
-    build: .
+    image: cristiandoocker/bienesraices:v1.0
+    # build: .
     container_name: django 
     # command: daphne -b 0.0.0.0 -p 8000 BienesRaices.asgi:application
     volumes: # Persistencia de datos del codigo de programación
@@ -50,7 +51,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_NAME=${DATABASE_NAME}
+      - POSTGRES_NAME=${DATABASE_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       # - DJANGO_SETTINGS_MODULE=BienesRaices.settings  # Websockets
