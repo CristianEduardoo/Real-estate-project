@@ -139,7 +139,7 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if ENVIRONMENT == "development":
+if ENVIRONMENT == "docker":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
