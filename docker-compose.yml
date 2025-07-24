@@ -1,83 +1,112 @@
-version: '3.8' # A partir de la versión 2.2 va el '3.8' => a partir de la 2.24 ya no es necesaria  
+version: '3.9'
 
-# Definimos los servicios/paquetes, que forman parte de la aplicación
-# SE ORDENA EN ORDEN DE RELACION/DEPENDENCIAS, DE MAYOR INPORTANCIA A MENOR
 services:
+  # ----------------------------
+  # Base de datos PostgreSQL
+  # ----------------------------
   db:
-    image: postgres:14.10 # version 14.10
-    restart: always # restaurar en caso se cae la DB
+    image: postgres:14.10
     container_name: postgresql
-    volumes: # volumnes => persistencia de datos, cuando se apaga la maquina 
+    restart: always
+    volumes:
       - ./data:/var/lib/postgresql/data
     environment:
-      - DATABASE_HOST=127.0.0.1
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
+    networks:
+          - proxy_network
 
 
-  pgadmin: # Definimos el servicio de pgadmin para ver los datos graficamente
+  # ----------------------------
+  # Interfaz gráfica de Postgres
+  # ----------------------------
+  pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
+    restart: always
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
-      - "8081:80" # Cambiado para evitar conflictos con Nginx
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - "8085:80" # Cambiado para evitar conflictos con Nginx
     depends_on:
       - db
 
+  # ----------------------------
+  # Cache / Broker (Redis)
+  # ----------------------------
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - proxy_network
 
-  # redis:
-  #   image: redis:latest
-  #   container_name: redis
-  #   ports:
-  #     - "6379:6379"
 
-
+  # ----------------------------
+  # Aplicación Django principal
+  # ----------------------------
   web:
-    image: cristiandoocker/bienesraices:v1.0
-    # build: .
-    container_name: django 
+    build: .
+    container_name: django_app
+    restart: always
     # command: daphne -b 0.0.0.0 -p 8000 BienesRaices.asgi:application
     volumes: # Persistencia de datos del codigo de programación
       - .:/code
       - ./static:/code/static
       - ./media:/code/media
-    ports:
-      - "8000:8000"
+    env_file:
+      - .env  # Variables de entorno
     environment:
-      - POSTGRES_NAME=${DATABASE_NAME}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       # - DJANGO_SETTINGS_MODULE=BienesRaices.settings  # Websockets
-    env_file:  # Incluir el archivo .env
-      - ./.env
+    expose:
+      - "8000"
     depends_on:
       - db
-      # - redis
+      - redis
+    networks:
+      - proxy_network
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations &&
+             python manage.py migrate &&
+             gunicorn BienesRaices.wsgi:application --bind 0.0.0.0:8000 --workers 3"
 
-  
+  # ----------------------------
+  # Proxy inverso Nginx
+  # ----------------------------
   nginx:
     image: nginx:latest
-    container_name: nginx
-    ports:
-      - "80:80"
+    container_name: nginx_raices
+    restart: always
     volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - ./static:/code/static
-      - ./media:/code/media
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf  # Configuración de Nginx
+      - static_volume:/app_facturas/staticfiles:ro  # Mapea el volumen de estáticos como solo lectura
+      # - media_volume:/app_facturas/mediafiles:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro  # Mapea certificados SSL generados por Certbot
     depends_on:
       - web
-
-
+    ports:
+      - "8400:80" # En vez de depender de una IP interna, mapeao el puerto del contenedor
+    networks:
+      - proxy_network
+    
 
 volumes:
-  .:
-  .data:
-  .static:
-  pgadmin-data:  
+  db_data:
+  static_volume:
+  media_volume:
+
+
+networks:
+  proxy_network:
+    external: true
