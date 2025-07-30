@@ -57,7 +57,6 @@ services:
     restart: always
     # command: daphne -b 0.0.0.0 -p 8000 BienesRaices.asgi:application
     volumes: # Persistencia de datos del codigo de programación
-      - .:/code
       - static_volume:/code/static
       - media_volume:/code/media
     env_file:
