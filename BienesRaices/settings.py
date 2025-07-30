@@ -144,8 +144,8 @@ if ENVIRONMENT == "docker":
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "BienesRaices",
-            "USER": env("USER"),
-            "PASSWORD": env("PASSWORD"),
+            "USER": env("POSTGRES_USER"),
+            "PASSWORD": env("POSTGRES_PASSWORD"),
             "HOST": "db",  # from my docker-compose.yml
             "PORT": "5432",
         }
