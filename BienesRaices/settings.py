@@ -39,7 +39,7 @@ else:
 # Solo va mi dominio ;)
 ALLOWED_HOSTS = [
     "pypycris.pythonanywhere.com",
-    "raices.cristian-castro.com",
+    "br.cristian-castro.com",
     "bienesraices.us-east-1.elasticbeanstalk.com",
     "localhost",
     "127.0.0.1",
