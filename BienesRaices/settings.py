@@ -1,5 +1,7 @@
 from pathlib import Path
-from environ import Env 
+from environ import Env
+# Métodos permitidos vía CORS (incluimos POST y más)
+# from corsheaders.defaults import default_methods
 import os  # Necesaria para el Login
 
 # Primero, define la ruta base de tu proyecto.
@@ -46,6 +48,11 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
 ]
 
+# Permitir CSRF POST desde este origen exacto y por HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    "https://br.cristian-castro.com",
+]
+
 # Application definition "channels",  # Biblioteca para manejar conexiones asíncronas
 # Aplicaciones de terceros se recomienda primero en la lista
 INSTALLED_APPS = [
@@ -87,6 +94,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
     "GET",
 ]
+
+# CORS_ALLOW_METHODS = list(default_methods)  # GET, POST, PUT, PATCH, DELETE, OPTIONS
 
 ROOT_URLCONF = 'BienesRaices.urls'
 

@@ -15,7 +15,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     networks:
-          - proxy_network
+      - proxy_network
 
 
   # ----------------------------
@@ -34,6 +34,8 @@ services:
       - "8085:80" # Cambiado para evitar conflictos con Nginx
     depends_on:
       - db
+    networks:
+      - proxy_network
 
   # ----------------------------
   # Cache / Broker (Redis)
