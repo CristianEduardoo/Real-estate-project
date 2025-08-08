@@ -1,19 +1,20 @@
 import os
-# import django
-from django.core.asgi import get_asgi_application
-from channels.routing import ProtocolTypeRouter, URLRouter
 
-# Un Middleware de autenticación
-from channels.auth import AuthMiddlewareStack
-import chat.routing
-
-
+# 1) Define la variable de entorno lo antes posible
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BienesRaices.settings")
 
-# Asegúrate de que las aplicaciones de Django estén completamente cargadas
-# django.setup()
+# 2) Inicializar Django antes de importar módulos que cargan modelos
+import django
 
-# application = get_asgi_application()
+django.setup()
+
+from django.core.asgi import get_asgi_application
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
+
+# 3) Ahora sí es seguro importar routing/consumers que usan modelos
+import chat.routing
+
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),

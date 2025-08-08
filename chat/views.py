@@ -11,8 +11,11 @@ from .models import Room
 
 def viewHome(request):
     # rooms = Room.objects.all()
-    room_name = Room.objects.first()
-    return render(request, "chat/home.html", {"room_name": room_name})
+    room = Room.objects.first()
+    if room is None:
+        # crea una sala por defecto (si procede)
+        room = Room.objects.create(name="Sala de chat")
+    return render(request, "chat/home.html", {"room_name": room})
 
 
 # ====== Codigo para permitir a cualquier usuario logged entrar en cualquier sala ======

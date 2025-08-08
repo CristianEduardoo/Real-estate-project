@@ -1,29 +1,35 @@
 $(function () {
-    console.log(user, room_id); // From room.html
-  
-    /* === Ruta para el web socket == */
-    let url = "ws://" + window.location.host + "/ws/chat/room/" + room_id + "/";
-    console.log(url);
-    console.log(window.location.host);
+  // console.log(user, room_id); // From room.html
 
-    /* === WebSocket === */
-    let chatWebSocket = new WebSocket(url);
-    console.log(chatWebSocket);
+  /* === Ruta para el web socket == */
+  // fragmento para http / https
+  let scheme = window.location.protocol === "https:" ? "wss" : "ws";
+  let chatSocketUrl = `${scheme}://${window.location.host}/ws/chat/room/${room_id}/`;
+  // console.log("WS URL:", chatSocketUrl);
 
-    chatWebSocket.onopen = function (e) {
-      console.log("WebSocket abierto");
-    };
+  // let url = "ws://" + window.location.host + "/ws/chat/room/" + room_id + "/";
+  // console.log(url);
+  // console.log(window.location.host);
 
-    chatWebSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      // console.log(data.type);
-      if (data.type === "chat_message") {
-        const msj = data.message;
-        const username = data.username;
-        const datetime = data.datetime;
+  /* === WebSocket === */
+  let chatWebSocket = new WebSocket(chatSocketUrl);
+  // console.log(chatWebSocket);
 
-        document.querySelector("#boxMessages").innerHTML +=
-          ` <div class="alert alert-success" role="alert">
+  chatWebSocket.onopen = function (e) {
+    console.log("WebSocket abierto");
+  };
+
+  chatWebSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    // console.log(data.type);
+    if (data.type === "chat_message") {
+      const msj = data.message;
+      const username = data.username;
+      const datetime = data.datetime;
+
+      document.querySelector(
+        "#boxMessages"
+      ).innerHTML += ` <div class="alert alert-success" role="alert">
                 ${msj}
                 <div>
                     <small class="fst-italic fw-bold">${username}</small>
@@ -31,21 +37,21 @@ $(function () {
                 </div>
             </div>
           `;
-      } else if (data.type === "user_list") {
-        let user_listHTML = "";
+    } else if (data.type === "user_list") {
+      let user_listHTML = "";
 
-        for (const username of data.users) {
-          const userClass = username === user ? "list-group-item-success" : "";
-          user_listHTML += `<li class="list-group-item ${userClass}">@${username}</li>`;
-        }
-
-        document.querySelector("#usersList").innerHTML = user_listHTML;
+      for (const username of data.users) {
+        const userClass = username === user ? "list-group-item-success" : "";
+        user_listHTML += `<li class="list-group-item ${userClass}">@${username}</li>`;
       }
-    };
 
-    chatWebSocket.onclose = function (e) {
-      console.log("WebSocket cerrado");
-    };
+      document.querySelector("#usersList").innerHTML = user_listHTML;
+    }
+  };
+
+  chatWebSocket.onclose = function (e) {
+    console.log("WebSocket cerrado");
+  };
 
   /*===================== JS =====================*/
 
@@ -72,12 +78,12 @@ $(function () {
     if (message.value.trim() !== "") {
       loadMessageHTML(message.value.trim());
       // ===> IMPORTANTE!! ===> Enviar mensaje al servidor
-        chatWebSocket.send(
-          JSON.stringify({
-            type: "chat_message",
-            message: message.value.trim(),
-          })
-        );
+      chatWebSocket.send(
+        JSON.stringify({
+          type: "chat_message",
+          message: message.value.trim(),
+        })
+      );
 
       console.log(message.value.trim());
 
@@ -99,8 +105,9 @@ $(function () {
 
     const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     /* === pasamos valores por JS - room.html === */
-    document.querySelector("#boxMessages").innerHTML += 
-      ` <div class="alert alert-primary" role="alert">
+    document.querySelector(
+      "#boxMessages"
+    ).innerHTML += ` <div class="alert alert-primary" role="alert">
             ${message}
             <div>
                 <small class="fst-italic fw-bold">${user}</small>

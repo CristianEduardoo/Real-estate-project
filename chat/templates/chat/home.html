@@ -12,9 +12,13 @@
     {% endif %}
     
     {% comment %} Desde viewHome {% endcomment %}
-    <div>
+    {% if room_name %}
         <a class="btn btn-success" href="{% url 'namespacechat:room-datail' room_name.id %}">{{ room_name.name }}</a>
-
         <a class="btn btn-primary" href="{% url 'namespaceraices:main' %}">Salir</a>
-    </div>
+    {% else %}
+        <p>No hay salas disponibles.</p>
+        <!-- Opcional: link para crear sala si tienes una vista -->
+        <!-- <a href="{% url 'namespacechat:create_room' %}" class="btn btn-primary">Crear sala</a> -->
+    {% endif %}
+
 {% endblock %}
