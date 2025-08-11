@@ -37,6 +37,7 @@ services:
     networks:
       - proxy_network
 
+
   # ----------------------------
   # Cache / Broker (Redis)
   # ----------------------------
@@ -81,6 +82,7 @@ services:
              python manage.py makemigrations &&
              python manage.py migrate &&
              daphne -b 0.0.0.0 -p 8000 BienesRaices.asgi:application"
+
 
   # ---------------------------- gunicorn BienesRaices.wsgi:application --bind 0.0.0.0:8000 --workers 3
   # Proxy inverso Nginx
