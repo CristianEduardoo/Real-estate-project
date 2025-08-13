@@ -276,5 +276,16 @@ SOCIAL_AUTH_FACEBOOK_KEY = env("SOCIAL_AUTH_FACEBOOK_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = env("SOCIAL_AUTH_FACEBOOK_SECRET")
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
-# Al final de tu archivo settings.py
+# =============== Configuracion extra login - Google =============== #
+# Indica a Django que confíe en el header X-Forwarded-Proto enviado por el proxy
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Fuerza a python-social-auth a usar https en redirect_uri
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
+# En caso de usar USE_X_FORWARDED_HOST en el entorno, activarlo también (opcional)
+USE_X_FORWARDED_HOST = True
+# ============================================= #
+
+# Al final del archivo settings.py
 WHITENOISE_ROOT = os.path.join(BASE_DIR, "media")
