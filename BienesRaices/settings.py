@@ -149,7 +149,7 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if ENVIRONMENT == "docker":
+if ENVIRONMENT == "docker_pythonanywhere":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -160,7 +160,7 @@ if ENVIRONMENT == "docker":
             "PORT": "5432",
         }
     }
-elif ENVIRONMENT == "pythonanywhere":
+elif ENVIRONMENT == "docker":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
