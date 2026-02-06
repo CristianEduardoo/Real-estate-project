@@ -26,26 +26,42 @@ $(function () {
       const msj = data.message;
       const username = data.username;
       const datetime = data.datetime;
+      const sender_id = data.sender_id;
+      const current_user_id = parseInt("{{ request.user.id }}");
 
-      document.querySelector(
-        "#boxMessages"
-      ).innerHTML += ` <div class="alert alert-success" role="alert">
-                ${msj}
-                <div>
-                    <small class="fst-italic fw-bold">${username}</small>
-                    <small class="float-end">${datetime}</small>
-                </div>
-            </div>
-          `;
+      // Determinar si es mensaje propio o de otro usuario
+      const isOwnMessage = sender_id === current_user_id;
+      const messageClass = isOwnMessage ? "own" : "other";
+
+      const messageHTML = `
+        <div class="message-box ${messageClass}">
+          <div class="message-content">
+            ${msj}
+          </div>
+          <div class="message-meta">
+            <strong>${username}</strong> • ${datetime}
+          </div>
+        </div>
+      `;
+
+      document.querySelector("#boxMessages").innerHTML += messageHTML;
+      
+      // Auto-scroll al último mensaje
+      const messagesContainer = document.querySelector("#boxMessages");
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
     } else if (data.type === "user_list") {
       let user_listHTML = "";
+      const usersCount = data.users.length;
 
       for (const username of data.users) {
-        const userClass = username === user ? "list-group-item-success" : "";
-        user_listHTML += `<li class="list-group-item ${userClass}">@${username}</li>`;
+        const isCurrentUser = username === user;
+        const userClass = isCurrentUser ? "current-user" : "";
+        const icon = isCurrentUser ? "fa-user-check" : "fa-user";
+        user_listHTML += `<li class="${userClass}"><i class="fas ${icon}"></i>${username}</li>`;
       }
 
       document.querySelector("#usersList").innerHTML = user_listHTML;
+      document.querySelector("#usersCount").textContent = usersCount;
     }
   };
 
@@ -104,16 +120,22 @@ $(function () {
     let seconds = ("0" + dateObject.getSeconds()).slice(-2);
 
     const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    /* === pasamos valores por JS - room.html === */
-    document.querySelector(
-      "#boxMessages"
-    ).innerHTML += ` <div class="alert alert-primary" role="alert">
-            ${message}
-            <div>
-                <small class="fst-italic fw-bold">${user}</small>
-                <small class="float-end">${formattedDate}</small>
-            </div>
+    
+    const messageHTML = `
+      <div class="message-box own">
+        <div class="message-content">
+          ${message}
         </div>
-      `;
+        <div class="message-meta">
+          <strong>${user}</strong> • ${formattedDate}
+        </div>
+      </div>
+    `;
+    
+    document.querySelector("#boxMessages").innerHTML += messageHTML;
+    
+    // Auto-scroll al último mensaje
+    const messagesContainer = document.querySelector("#boxMessages");
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 });

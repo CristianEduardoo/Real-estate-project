@@ -2,36 +2,383 @@
 {% load static %}
 
 {% block content %}
+    <style>
+        .chat-room-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            height: 80vh;
+        }
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <h2>{{ room.name }}</h2>
-                <h4 class="text-danger">Usuario: {{ request.user }}</h4>
-                <hr>
-                <!-- Se maneja con JS -->
-                <div id="boxMessages"> </div>
-                
-                <!-- INPUT DE CHAT -->
-                <div id="chat">
-                    <input class="form-control" type="text" id="inputMessage" placeholder="Escribe un mensaje...">
-        
-                    <button class="btn btn-success mt-2" type="submit" id="btnMessage" >Enviar</button>
-        
-                    <a class="btn btn-primary mt-2 float-end" href="{% url 'namespaceraices:main' %}">Salir</a>
-                </div>
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(32, 32, 32, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ffbe00 0%, #f5b600 100%);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e6ab00;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .chat-header h2 i{
+            margin-right: 0.5rem;
+        }
+
+        .chat-header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f9f9f9;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #ffbe00;
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #e6ab00;
+        }
+
+        .chat-input-area {
+            padding: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #inputMessage {
+            flex: 1;
+            padding: 1rem !important;
+            border: 1px solid #ddd !important;
+            border-radius: 8px !important;
+            font-size: 1.6rem !important;
+        }
+
+        #inputMessage:focus {
+            border-color: #ffbe00 !important;
+            box-shadow: 0 0 0 3px rgba(255, 190, 0, 0.1) !important;
+        }
+
+        #btnMessage {
+            background-color: #71b100;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1.4rem;
+        }
+
+        #btnMessage:hover {
+            background-color: #619800;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .chat-actions a {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .users-sidebar {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(32, 32, 32, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .users-header {
+            background: linear-gradient(135deg, #0d1821 0%, #1c1c1c 100%);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .users-header i{
+            margin-right: 0.5rem;
+        }
+
+        .users-count {
+            background: #71b100;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .users-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+
+        .users-list li {
+            list-style: none;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #333;
+            transition: background-color 0.2s ease;
+        }
+
+        .users-list li:hover {
+            background-color: #f5f5f5;
+        }
+
+        .users-list li.current-user {
+            background-color: #f0f7ff;
+            border-left: 4px solid #71b100;
+            padding-left: calc(1.5rem - 4px);
+        }
+
+        .users-list li i {
+            margin-right: 0.8rem;
+            color: #71b100;
+            font-size: 1.2rem;
+        }
+
+        .message-box {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-box.own {
+            align-items: flex-end;
+        }
+
+        .message-box.other {
+            align-items: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .message-box.own .message-content {
+            background: #71b100;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-box.other .message-content {
+            background: #e8e8e8;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-meta {
+            font-size: 1.2rem;
+            color: #999;
+            margin-top: 0.4rem;
+            padding: 0 1rem;
+        }
+
+        .message-box.own .message-meta {
+            text-align: right;
+        }
+
+        /* Dark Mode */
+        .dark-mode .chat-main {
+            background: #2a2a2a;
+        }
+
+        .dark-mode .chat-messages {
+            background: #1c1c1c;
+        }
+
+        .dark-mode .chat-input-area {
+            background: #2a2a2a;
+            border-top-color: #444;
+        }
+
+        .dark-mode #inputMessage {
+            background: #1c1c1c !important;
+            color: #e1e1e1 !important;
+            border-color: #444 !important;
+        }
+
+        .dark-mode #inputMessage::placeholder {
+            color: #e1e1e1 !important;
+            opacity: 0.7 !important;
+        }
+
+        .dark-mode .users-sidebar {
+            background: #2a2a2a;
+        }
+
+        .dark-mode .users-list li {
+            color: #e1e1e1;
+            border-bottom-color: #444;
+        }
+
+        .dark-mode .users-list li:hover {
+            background-color: #333;
+        }
+
+        .dark-mode .users-list li.list-group-item-success {
+            background-color: #1c2c3a;
+        }
+
+        .dark-mode .message-box.other .message-content {
+            background: #444;
+            color: #e1e1e1;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .chat-room-container {
+                grid-template-columns: 1fr;
+                height: auto;
+                max-width: 100%;
+            }
+
+            .users-sidebar {
+                max-height: 300px;
+            }
+
+            .chat-messages {
+                max-height: 400px;
+            }
+
+            .chat-main {
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chat-room-container {
+                gap: 1rem;
+            }
+
+            .chat-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-input-area {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            #btnMessage {
+                width: 100%;
+            }
+
+            .chat-actions {
+                flex-direction: column;
+            }
+
+            .chat-actions a {
+                margin: 0;
+            }
+        }
+    </style>
+
+    <div class="chat-room-container">
+        <!-- Sección Principal de Chat -->
+        <div class="chat-main">
+            <!-- Header -->
+            <div class="chat-header">
+                <h2><i class="fas fa-comments"></i> {{ room.name }}</h2>
+                <p><i class="fas fa-user-circle"></i> {{ request.user.username }}</p>
             </div>
 
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Usuarios Conectados</h5>
-                        <ul class="list-group" id="usersList">
-                            
-                        </ul>
-                    </div>    
-                </div>
+            <!-- Área de Mensajes -->
+            <div class="chat-messages" id="boxMessages">
+                <!-- Los mensajes se cargan aquí vía JavaScript -->
             </div>
+
+            <!-- Área de Input -->
+            <div class="chat-input-area">
+                <input 
+                    class="form-control" 
+                    type="text" 
+                    id="inputMessage" 
+                    placeholder="Escribe tu mensaje aquí..."
+                    autocomplete="off"
+                >
+                <button class="btn" id="btnMessage">
+                    <i class="fas fa-paper-plane"></i> Enviar
+                </button>
+            </div>
+
+            <!-- Acciones -->
+            <div style="padding: 1rem 1.5rem; border-top: 1px solid #e0e0e0;">
+                <a class="btn-amarillo" href="{% url 'namespaceraices:main' %}" style="display: inline-block; width: auto;">
+                    <i class="fas fa-arrow-left"></i> Volver al inicio
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar de Usuarios -->
+        <div class="users-sidebar">
+            <div class="users-header">
+                <i class="fas fa-users"></i>
+                Usuarios en línea
+                <!-- <span class="users-count" id="userCount">0</span> -->
+            </div>
+            <ul class="users-list" id="usersList">
+                <!-- Los usuarios se cargan aquí vía JavaScript -->
+            </ul>
         </div>
     </div>
 

@@ -24,6 +24,7 @@ ENVIRONMENT = env("ENVIRONMENT", default="production")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = "/code/media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, "media") # first
+# MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Quick-start development settings - unsuitable for production
@@ -229,6 +230,8 @@ STATIC_ROOT = '/code/static/'
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]
+
+# STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # PythonAnyWhere
 
