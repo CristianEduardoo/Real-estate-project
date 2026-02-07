@@ -1,30 +1,33 @@
 from pathlib import Path
+import os
 from environ import Env
+
 # Métodos permitidos vía CORS (incluimos POST y más)
 # from corsheaders.defaults import default_methods
-import os  # Necesaria para el Login
 
-# Primero, define la ruta base de tu proyecto.
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Variables Globales
 env = Env()
-env_file = os.path.join(BASE_DIR, ".env")  # Asegúrate que la ruta aquí sea correcta
-env.read_env(env_file)  # Lee el archivo .env desde la ruta especificada
+env_file = os.path.join(BASE_DIR, ".env")
+env.read_env(env_file)
 
 ENVIRONMENT = env("ENVIRONMENT", default="production")
 
 
 # Luego, define la ruta completa para el directorio de medios. Para guardar img, pdf, etc...
 # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 # También, es buena práctica definir la URL para los archivos de medios.
 # Para acceder a los archivos de medios desde el navegador.
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "/code/media/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media") # first
 # MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_URL = "/media/"
+
+if ENVIRONMENT == "development":
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # first
+else:
+    MEDIA_ROOT = "/code/media/"
 
 
 # Quick-start development settings - unsuitable for production
@@ -134,15 +137,24 @@ WSGI_APPLICATION = "BienesRaices.wsgi.application"
 ASGI_APPLICATION = "BienesRaices.asgi.application"
 
 # Channels-redis Config
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("redis", 6379)],
-            #"hosts": [("localhost", 6379)],
+if ENVIRONMENT == "development":
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("localhost", 6379)],
+            },
         },
-    },
-}
+    }
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("redis", 6379)],
+            },
+        },
+    }
 
 # en lugar de localhost => redis
 
@@ -219,22 +231,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/code/static/'
+STATIC_URL = "/static/"
 
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"), # first 1
-# ]
+if ENVIRONMENT == "development":
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"), # first 1
+    ]
+else:
+    STATIC_ROOT = "/code/static/"
 
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]
-
 # STATIC_ROOT = BASE_DIR / "staticfiles"
-
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # PythonAnyWhere
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

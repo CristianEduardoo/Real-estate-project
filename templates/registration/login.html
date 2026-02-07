@@ -26,11 +26,11 @@
                     <form class="form" action="{% url 'namespaceusers:login' %}" method="POST"> <!-- Valida los campos -->
                         {% csrf_token %}
                         <h1>Bienvenido</h1>
-                        <p>Estamos encantados de verte de vuelta</p>
+                        <p>Puedes pobrar el proyecto con las siguientes credenciales, registrandote o a través de Google</p>
                         <div class="group login-input">
                             <div class="field-group">
                                 <i class="fa-regular fa-user icon"></i>
-                                <input class="input-field" id="email" type="email" name="email" placeholder="Email" required>
+                                <input class="input-field" id="email" type="email" name="email" placeholder="Email" value="user@user.com" required>
                             </div>
                             <!-- aqui el bloque de error de user -->
                         </div>
@@ -38,7 +38,7 @@
                         <div class="group login-input">
                             <div class="field-group">
                                 <i class="fa-solid fa-lock icon"></i>
-                                <input class="input-field" id="password" type="password" name="password" placeholder="Contraseña" required>
+                                <input class="input-field" id="password" type="password" name="password" placeholder="Contraseña" value="User1*@@" required>
                                 <i class="fa-regular fa-eye-slash login__eye" id="login-eye"></i>
                             </div>
                             <!-- aqui el bloque de error de password -->

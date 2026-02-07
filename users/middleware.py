@@ -14,7 +14,7 @@ class AutoLogoutMiddleware(MiddlewareMixin):
 
         if last_activity:
             elapsed_time = current_time - last_activity
-            if elapsed_time > 300:  # 5 minutos
+            if elapsed_time > 3600:  # 1 hora
                 logout(request)
                 return
 
